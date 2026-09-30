@@ -22,14 +22,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 // import { useState, useEffect } from "react";
-
+import { FileUpload } from "@/components/FileUpload";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   imageUrl: z.string().min(1, { message: "Image URL is required" }),
 });
 
 export const InitialModal = () => {
-  // uncomment this to prevent hydration error
+  // uncomment this to prevent hydration error 
   // const [isMounted, setIsMounted] = useState(false);
   // useEffect(() => {
   //   setIsMounted(true);
@@ -63,7 +63,24 @@ export const InitialModal = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-8 px-6">
             <div className="flex items-center justify-center text-center">
-              TODO: IMAGE  UPLOAD
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FileUpload
+                      endpoint="serverImage"
+                      value={field.value}
+                      onChange={(url) => {
+                        form.setValue("imageUrl", url ?? "", {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
+                  </FormItem>
+                )}
+              />
             </div>
             <FormField
               control={form.control}

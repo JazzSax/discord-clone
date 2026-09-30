@@ -10,5 +10,7 @@ export const config = {
     '/__clerk/:path*',
     // Always run for API routes
     '/(api|trpc)(.*)',
+    // Always run for uploadthing routes
+    '/api/uploadthing(.*)',
   ],
 };

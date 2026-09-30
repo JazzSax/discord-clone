@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { cn } from "cn";
 
 const openSans = Open_Sans({
   variable: "--font-geist-sans",
@@ -26,12 +27,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${openSans.variable} ${openSansMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className={cn('bg-white dark:bg-[#313338]')}>
         <ClerkProvider afterSignOutUrl="/" >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
-            enableSystem={false}
+            enableSystem
             storageKey="thiscord-theme"
           >
             {children}

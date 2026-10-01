@@ -12,3 +12,16 @@ export const findServerByProfileId = async (profileId: string) => {
   });
   return server;
 };
+
+export const findServersByProfileId = async (profileId: string) => {
+  const servers = await db.server.findMany({
+    where: {
+      members: {
+        some: {
+          profileId: profileId,
+        },
+      },
+    },
+  });
+  return servers;
+};

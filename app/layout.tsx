@@ -4,7 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { cn } from "cn";
-
+import { ModalProvider } from "@/components/providers/ModalProvider";
 const openSans = Open_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             enableSystem
             storageKey="thiscord-theme"
           >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </ClerkProvider>

@@ -21,8 +21,8 @@ export const ActionTooltip = ({
       <Tooltip.Root>
         <Tooltip.Trigger render={children} />
         <Tooltip.Portal>
-          <Tooltip.Positioner side={side} align={align} sideOffset={8}>
-            <Tooltip.Popup className="z-50 rounded-md bg-black px-3 py-1.5 text-sm font-semibold text-white capitalize">
+          <Tooltip.Positioner className="z-50" side={side} align={align} sideOffset={8}>
+            <Tooltip.Popup className="rounded-md bg-black px-3 py-1.5 text-sm font-semibold text-white capitalize">
               {label.toLowerCase()}
             </Tooltip.Popup>
           </Tooltip.Positioner>

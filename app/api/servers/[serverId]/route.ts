@@ -1,0 +1,27 @@
+import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
+import { currentProfile } from "@/lib/current-profile";
+export async function PATCH(req: Request, { params }: { params: Promise<{ serverId: string }> }) {
+  try {
+    const profile = await currentProfile();
+    if (!profile) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    const { serverId } = await params;
+    const { name, imageUrl } = await req.json();
+    if (!serverId) {
+      return new Response('Server ID is missing', { status: 400 });
+    }
+
+    const server = await db.server.update({
+      where: { id: serverId },
+      data: { name, imageUrl },
+    });
+
+    return NextResponse.json(server);
+  } catch (error) {
+    console.log(error);
+    return new Response('Internal Server Error', { status: 500 });
+  }
+}

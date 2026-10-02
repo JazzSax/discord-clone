@@ -25,3 +25,41 @@ export const findServersByProfileId = async (profileId: string) => {
   });
   return servers;
 };
+
+export const findServerById = async (serverId: string, profileId: string) => {
+  const server = await db.server.findUnique({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          profileId: profileId,
+        },
+      },
+    },
+  });
+  return server;
+};
+
+export const findServerWithChannelsAndMembersById = async (serverId: string) => {
+  const server = await db.server.findUnique({
+    where: {
+      id: serverId,
+    },
+    include: {
+      channels: {
+        orderBy: {
+          createdAt: 'asc',
+        },
+      },
+      members: {
+        include: {
+          profile: true,
+        },
+        orderBy: {
+          role: 'asc',
+        },
+      },
+      }
+  });
+  return server;
+};

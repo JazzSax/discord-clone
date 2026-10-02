@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "ChannelType" RENAME VALUE 'VOICE' TO 'VIDEO';

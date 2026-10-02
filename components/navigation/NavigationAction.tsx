@@ -1,11 +1,10 @@
 "use client";
 
-import { Button } from "@base-ui/react/button";
 import { PlusIcon } from "lucide-react";
 import { ActionTooltip } from "../ActionTooltip";
-import { useModalStore } from "@/hooks/useModalStore";
+import { useModal } from "@/hooks/useModalStore";
 export const NavigationAction = () => {
-  const { onOpen } = useModalStore();
+  const { onOpen } = useModal();
   const onClick = () => {
     onOpen("createServer");
   };

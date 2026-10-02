@@ -63,3 +63,33 @@ export const findServerWithChannelsAndMembersById = async (serverId: string) => 
   });
   return server;
 };
+
+export const findServerByInviteCode = async (inviteCode: string, profileId: string) => {
+  const server = await db.server.findFirst({
+    where: {
+      inviteCode: inviteCode,
+      members: {
+        some: {
+          profileId: profileId,
+        },
+      },
+    },
+  });
+  return server;
+};
+
+export const joinServerFromInviteCode = async (inviteCode: string, profileId: string) => {
+  const server = await db.server.update({
+    where: {
+      inviteCode: inviteCode,
+    },
+    data: {
+    members: {
+        create: [{
+          profileId: profileId,
+        }],
+      },
+    },
+  });
+  return server;
+};

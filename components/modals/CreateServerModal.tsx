@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/FileUpload";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useModalStore } from "@/hooks/useModalStore";
+import { useModal } from "@/hooks/useModalStore";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -33,7 +33,7 @@ const formSchema = z.object({
 });
 
 export const CreateServerModal = () => {
-  const { isOpen, onClose, type } = useModalStore();
+  const { isOpen, onClose, type } = useModal();
 
   const router = useRouter();
   const isModalOpen = isOpen && type === "createServer";

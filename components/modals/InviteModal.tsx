@@ -53,7 +53,7 @@ export const InviteModal = () => {
           <DialogTitle className="text-2xl text-center font-bold">Invite Friends</DialogTitle>
         </DialogHeader>
         <div className="p-6">
-          <Label className="uppercasetext-xs font-bold text-zinc-500 dark:text-secondary/70">
+          <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
             Server Invite Link
           </Label>
           <div className="flex items-center gap-x-2 mt-2">

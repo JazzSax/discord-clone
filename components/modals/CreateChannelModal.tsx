@@ -110,7 +110,13 @@ export const CreateChannelModal = () => {
                   <Select disabled={isLoading} onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0">
-                        <SelectValue placeholder="Select a channel type" />
+                        <SelectValue placeholder="Select a channel type">
+                          {(value) =>
+                            typeof value === "string"
+                              ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+                              : "Select a channel type"
+                          }
+                        </SelectValue>
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

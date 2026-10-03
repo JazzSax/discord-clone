@@ -7,12 +7,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ se
   try {
     const { serverId } = await params;
     if (!serverId) {
-      return new Response("Server ID is missing", { status: 400 });
+      return new NextResponse("Server ID is missing", { status: 400 });
     }
 
     const profile = await currentProfile();
     if (!profile) {
-      return new Response("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const server = await db.server.update({
@@ -28,6 +28,6 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ se
     return NextResponse.json(server);
   } catch (error) {
     console.log(error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 }

@@ -8,16 +8,16 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new Response("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
     const { searchParams } = new URL(req.url);
     const serverId = searchParams.get("serverId");
     if (!serverId) {
-      return new Response("Server ID is missing", { status: 400 });
+      return new NextResponse("Server ID is missing", { status: 400 });
     }
     const { memberId } = await params;
     if (!memberId) {
-      return new Response("Member ID is missing", { status: 400 });
+      return new NextResponse("Member ID is missing", { status: 400 });
     }
     const { role } = await req.json();
 
@@ -39,7 +39,7 @@ export async function PATCH(
     return NextResponse.json(server);
   } catch (error) {
     console.log(error);
-    return new Response("Internal Error", { status: 500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
@@ -50,16 +50,16 @@ export async function DELETE(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new Response("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
     const { searchParams } = new URL(req.url);
     const serverId = searchParams.get("serverId");
     if (!serverId) {
-      return new Response("Server ID is missing", { status: 400 });
+      return new NextResponse("Server ID is missing", { status: 400 });
     }
     const { memberId } = await params;
     if (!memberId) {
-      return new Response("Member ID is missing", { status: 400 });
+      return new NextResponse("Member ID is missing", { status: 400 });
     }
     const server = await db.server.update({
       where: { id: serverId, profileId: profile.id },
@@ -79,6 +79,6 @@ export async function DELETE(
   }
   catch (error) {
     console.log(error);
-    return new Response("Internal Error", { status: 500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }

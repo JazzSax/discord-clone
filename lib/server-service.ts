@@ -93,3 +93,27 @@ export const joinServerFromInviteCode = async (inviteCode: string, profileId: st
   });
   return server;
 };
+
+export const findServerWithGeneralChannelById = async (serverId: string, profileId: string) => {
+  const server = await db.server.findFirst({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          profileId: profileId,
+        },
+      },
+    },
+    include: {
+      channels: {
+        where: {
+          name: "general",
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+      },
+    },
+  });
+  return server;
+};

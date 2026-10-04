@@ -14,7 +14,7 @@ export const NavigationSidebar = async () => {
   }
   const servers = await findServersByProfileId(profile.id);
   return (
-    <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-white py-3">
+    <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-[#E3E5E8] py-3">
       <NavigationAction/>
       <Separator className="data-horizontal:h-[2px] data-horizontal:w-10 bg-zinc-300 dark:bg-zinc-700 rounded-md mx-auto" />
       <ScrollArea className="flex-1 w-full">

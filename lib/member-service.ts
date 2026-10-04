@@ -9,3 +9,16 @@ export const findMemberByServerIdAndProfileId = async (serverId: string, profile
   });
   return member;
 }
+
+export const findMemberProfile = async (serverId: string, profileId: string) => {
+  const member = await db.member.findFirst({
+    where: {
+      serverId: serverId,
+      profileId: profileId,
+    },
+    include: {
+      profile: true,
+    },
+  });
+  return member;
+}

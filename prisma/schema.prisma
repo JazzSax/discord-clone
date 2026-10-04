@@ -62,11 +62,17 @@ model Member {
 
   role MemberRole @default(GUEST)
 
+ 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([profileId, serverId])
 
+  messages Message[]
+  conversationsInitiated Conversation[] @relation("MemberOneId")
+  conversationsReceived Conversation[] @relation("MemberTwoId")
+  directMessages DirectMessage[]
 }
 
 enum ChannelType {
@@ -88,5 +94,64 @@ model Channel {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  messages Message[]
+
   @@index([serverId, profileId])
+}
+
+model Message {
+  id String @id @default(uuid())
+  content String
+  fileUrl String?
+
+  memberId String
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+
+  @@index([memberId, channelId])
+
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  memberOneId String
+  memberOne Member @relation("MemberOneId", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId String
+  memberTwo Member @relation("MemberTwoId", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([memberOneId, memberTwoId])
+  @@unique([memberOneId, memberTwoId])
+
+  directMessages DirectMessage[]
+}
+
+model DirectMessage {
+  id String @id @default(uuid())
+  content String
+  fileUrl String?
+  memberId String
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deleted Boolean @default(false)
+
+  @@index([memberId, conversationId])
 }

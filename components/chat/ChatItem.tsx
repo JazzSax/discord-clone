@@ -1,5 +1,5 @@
 "use client";
-import { Member, Profile, Message, MemberRole } from "@/lib/generated/prisma/browser";
+import { Member, Profile, MemberRole } from "@/lib/generated/prisma/browser";
 import { UserAvatar } from "@/components/UserAvatar";
 import { ActionTooltip } from "@/components/ActionTooltip";
 import { ShieldCheck, ShieldAlert, FileIcon, Edit, Trash } from "lucide-react";
@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  FormLabel,
 } from "@/components/ui/form";
 import * as z from "zod";
 import axios from "axios";
@@ -21,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/useModalStore";
 
 interface ChatItemProps {
   id: string;
@@ -49,7 +49,7 @@ const formSchema = z.object({
 
 export const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMember, isUpdated, socketUrl, socketQuery }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const { onOpen } = useModal();
 
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -219,7 +219,7 @@ export const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, cur
               canDeleteMessage && (
                 <ActionTooltip label="Delete">
                   <Trash 
-                    onClick={() => setIsDeleting(true)}
+                    onClick={() => onOpen("deleteMessage", { apiUrl: `${socketUrl}/${id}`, query: socketQuery })}
                     className="cursor-pointer ml-auto h-4 w-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 hover:dark:text-zinc-300 transition" 
                   />
                 </ActionTooltip>

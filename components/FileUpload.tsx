@@ -39,8 +39,8 @@ export const FileUpload = ({ endpoint, value, onChange }: FileUploadProps) => {
   }
   if (value) {
     return (
-      <div className="relative h-20 w-20">
-        <Image fill src={value} alt="Upload" className="rounded-full" />
+      <div className="relative mx-auto h-20 w-20">
+        <Image fill src={value} alt="Upload" className="rounded-full object-cover object-center" />
         <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full shadow-sm" onClick={handleRemove}>
           <X className="h-4 w-4" />
         </button>
@@ -52,8 +52,11 @@ export const FileUpload = ({ endpoint, value, onChange }: FileUploadProps) => {
     endpoint={endpoint} 
     onClientUploadComplete={(res) => {
       const file = res?.[0];
-      setIsPdf(isPdfUpload(file));
-      onChange(file?.ufsUrl);
+      const pdf = isPdfUpload(file);
+      setIsPdf(pdf);
+      const url = file?.ufsUrl;
+      if (!url) return;
+      onChange(file?.name ? `${url}#${encodeURIComponent(file.name)}` : url);
     }} 
     onUploadError={(error: Error) => {
       console.log(error);

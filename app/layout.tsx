@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { cn } from "cn";
 import { ModalProvider } from "@/components/providers/ModalProvider";
 import { SocketProvider } from "@/components/providers/SocketProvider";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 const openSans = Open_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -37,8 +38,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             storageKey="thiscord-theme"
           >
             <SocketProvider>
-              <ModalProvider />
-              {children}
+              <QueryProvider>
+                <ModalProvider />
+                  {children}
+              </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </ClerkProvider>

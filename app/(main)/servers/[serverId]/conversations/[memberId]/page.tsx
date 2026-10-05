@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { findMemberProfile } from "@/lib/member-service";
 import { redirect } from "next/navigation";
 import { ChatHeader } from "@/components/chat/";
+import { ChatMessages } from "@/components/chat/ChatMessages";
+import { ChatInput } from "@/components/chat/ChatInput";
 
 interface ConversationPageProps {
   params: {
@@ -39,6 +41,27 @@ export default async function ConversationPage({ params }: ConversationPageProps
         name={otherMember.profile.name} 
         serverId={serverId}
         type="conversation"
+      />
+      <ChatMessages 
+        name={otherMember.profile.name}
+        member={currentMember}
+        apiUrl={"/api/direct-messages"}
+        chatId={conversation.id}
+        socketUrl={"/api/socket/direct-messages"}
+        socketQuery={{
+          conversationId: conversation.id,
+        }}
+        paramKey="conversationId"
+        paramValue={conversation.id}
+        type="conversation"
+      />
+      <ChatInput
+        name={otherMember.profile.name}
+        type="conversation"
+        apiUrl={"/api/socket/direct-messages"}
+        query={{
+          conversationId: conversation.id,
+        }}
       />
     </div>
   )

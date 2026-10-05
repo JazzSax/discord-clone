@@ -1,12 +1,15 @@
 import { create } from "zustand";
 import type { Server, ChannelType, Channel } from "@/lib/generated/prisma/browser";
 
-export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "deleteChannel" | "editChannel";
+export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "deleteChannel" | "editChannel" | "messageFile";
 
 interface ModalData {
   server?: Server,
   channel?: Channel,
   channelType?: ChannelType,
+  apiUrl?: string,
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: Record<string, any>,
 }
 interface ModalStore {
   type: ModalType | null;

@@ -13,7 +13,7 @@ interface NavigationItemProps {
 export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
   const params = useParams();
   const router = useRouter();
-  const isActive = params.serverId === id;
+  const isActive = params?.serverId === id;
   const onClick = () => {
     router.push(`/servers/${id}`);
   };

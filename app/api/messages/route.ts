@@ -4,10 +4,7 @@ import { Message } from "@/lib/generated/prisma/browser";
 import { NextResponse } from "next/server";
 
 const MESSAGES_BATCH = 10;
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ channelId: string }> }
-) {
+export async function GET(req: Request) {
   try {
     const profile = await currentUser();
     if (!profile) {

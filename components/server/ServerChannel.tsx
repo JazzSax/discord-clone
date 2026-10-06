@@ -26,7 +26,7 @@ export const ServerChannel = ({ channel, role, server }: ServerChannelProps) => 
   const Icon = iconMap[channel.type];
   return (
     <button 
-      onClick={() => router.push(`/servers/${params.serverId}/channels/${channel.id}`)} 
+      onClick={() => router.push(`/servers/${params?.serverId}/channels/${channel.id}`)} 
       className={cn("group px-2 py-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1", params?.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700")}
     >
       <Icon className="shrink-0 w-5 h-5 text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition" />

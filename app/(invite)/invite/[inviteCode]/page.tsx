@@ -1,18 +1,12 @@
-import { currentProfile } from "@/lib/current-profile";
+import { initialProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 import { findServerByInviteCode, joinServerFromInviteCode } from "@/lib/server-service";
 
 interface InvitePageProps {
   params: Promise<{ inviteCode: string }>;
 }
 const InvitePage = async ({ params }: InvitePageProps) => {
-  const profile = await currentProfile();
-  
-  if (!profile) {
-    const { redirectToSignIn } = await auth();
-    return redirectToSignIn();
-  }
+  const profile = await initialProfile();
 
   const { inviteCode } = await params;
   if (!inviteCode) {
@@ -29,7 +23,7 @@ const InvitePage = async ({ params }: InvitePageProps) => {
     return redirect(`/servers/${server.id}`);
   }
 
-  return null;
+  return redirect("/");
 };
 
 export default InvitePage;

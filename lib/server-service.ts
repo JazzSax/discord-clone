@@ -79,12 +79,22 @@ export const findServerByInviteCode = async (inviteCode: string, profileId: stri
 };
 
 export const joinServerFromInviteCode = async (inviteCode: string, profileId: string) => {
+  const existingServer = await db.server.findUnique({
+    where: {
+      inviteCode: inviteCode,
+    },
+  });
+
+  if (!existingServer) {
+    return null;
+  }
+
   const server = await db.server.update({
     where: {
       inviteCode: inviteCode,
     },
     data: {
-    members: {
+      members: {
         create: [{
           profileId: profileId,
         }],
